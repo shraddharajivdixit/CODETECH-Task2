@@ -1,0 +1,89 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class StudentGrades {
+    private Map<String, Double> grades;
+
+    public StudentGrades() {
+        grades = new HashMap<>();
+    }
+
+    public void addGrade(String subject, double grade) {
+        grades.put(subject, grade);
+    }
+
+    public double calculateAverage() {
+        double sum = 0;
+        for (double grade : grades.values()) {
+            sum += grade;
+        }
+        return sum / grades.size();
+    }
+
+    public String calculateLetterGrade(double average) {
+        if (average >= 90) {
+            return "A";
+        } else if (average >= 80) {
+            return "B";
+        } else if (average >= 70) {
+            return "C";
+        } else if (average >= 60) {
+            return "D";
+        } else {
+            return "F";
+        }
+    }
+
+    public double calculateGPA(double average) {
+        if (average >= 90) {
+            return 4.0;
+        } else if (average >= 80) {
+            return 3.0;
+        } else if (average >= 70) {
+            return 2.0;
+        } else if (average >= 60) {
+            return 1.0;
+        } else {
+            return 0.0;
+        }
+    }
+
+    public void displayGrades() {
+        System.out.println("Grades:");
+        for (Map.Entry<String, Double> entry : grades.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        StudentGrades studentGrades = new StudentGrades();
+
+        System.out.println("Enter the number of subjects:");
+        int numberOfSubjects = scanner.nextInt();
+        scanner.nextLine(); // consume the newline
+
+        for (int i = 0; i < numberOfSubjects; i++) {
+            System.out.println("Enter the subject name:");
+            String subject = scanner.nextLine();
+            System.out.println("Enter the grade for " + subject + ":");
+            double grade = scanner.nextDouble();
+            scanner.nextLine(); // consume the newline
+            studentGrades.addGrade(subject, grade);
+        }
+
+        studentGrades.displayGrades();
+
+        double average = studentGrades.calculateAverage();
+        String letterGrade = studentGrades.calculateLetterGrade(average);
+        double gpa = studentGrades.calculateGPA(average);
+
+        System.out.println("Average Grade: " + average);
+        System.out.println("Letter Grade: " + letterGrade);
+        System.out.println("GPA: " + gpa);
+
+        scanner.close();
+    }
+}
+
